@@ -1,0 +1,110 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------- Design tokens (space-separated RGB so Tailwind opacity works) ---------- */
+:root {
+  --bg: 246 247 251;
+  --surface: 255 255 255;
+  --raised: 232 238 252;
+  --line: 227 230 238;
+  --line-strong: 207 213 227;
+  --ink: 20 26 43;
+  --muted: 104 113 138;
+  --subtle: 94 103 128;
+  --primary: 47 95 208;
+  --success: 15 157 110;
+  --success-soft: 223 245 236;
+  --warning: 161 98 7;
+  --warning-soft: 254 243 199;
+  --danger: 220 38 38;
+  --danger-soft: 254 226 226;
+  --hero: 233 248 242;
+  --hero-line: 167 227 204;
+  --account: 20 32 70;
+}
+
+.dark {
+  --bg: 11 15 26;
+  --surface: 13 18 32;
+  --raised: 19 28 52;
+  --line: 28 35 54;
+  --line-strong: 42 51 80;
+  --ink: 230 233 242;
+  --muted: 138 147 168;
+  --subtle: 125 135 156;
+  --primary: 59 111 224;
+  --success: 52 211 153;
+  --success-soft: 18 48 42;
+  --warning: 245 192 74;
+  --warning-soft: 51 42 24;
+  --danger: 248 113 113;
+  --danger-soft: 58 22 22;
+  --hero: 12 26 26;
+  --hero-line: 31 90 74;
+  --account: 20 32 70;
+}
+
+@layer base {
+  html {
+    color-scheme: light;
+  }
+  html.dark {
+    color-scheme: dark;
+  }
+  body {
+    @apply bg-bg font-sans text-[15px] leading-[22px] text-ink antialiased;
+  }
+  :focus-visible {
+    outline: 2px solid rgb(var(--primary));
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  /* One place to change how every text field looks */
+  .field-input {
+    @apply h-12 w-full rounded-lg border border-line-strong bg-surface px-3.5 text-[15px] text-ink placeholder:text-subtle md:h-11;
+  }
+  .field-input[aria-invalid='true'] {
+    @apply border-danger;
+  }
+  .card {
+    @apply rounded-xl border border-line bg-surface;
+  }
+}
+
+/* Payment-confirmed moment (spec section 5). Disabled for reduced motion below. */
+@keyframes draw-check {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes row-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.check-draw {
+  stroke-dasharray: 30;
+  stroke-dashoffset: 30;
+  animation: draw-check 400ms ease-out 150ms forwards;
+}
+.row-in {
+  animation: row-in 200ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 1ms !important;
+  }
+}
